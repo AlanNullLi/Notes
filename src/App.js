@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import { Input } from 'antd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { TextArea } = Input;
+//can use input as the actual notecard component too 
+//unless there is a better card component
+//set the default as what is in state already
+//then when they press enter they can just see the new stuff 
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      noteList: []
+    };
+  }
+
+  addNote = (tit, not) => {
+    var d = new Date();
+    this.setState(prevState => {
+      var newNote = { title: tit, notes: not, time: d.toLocaleString() }
+      return { ...prevState.noteList, newNote }
+    });
+  }
+  removeNote = (tit) => {
+    const newNotes = this.state.noteList.filter(
+      note => note.title !== tit
+    );
+    this.setState(prevState => {
+      return { noteList: newNotes }
+    });
+  }
+
+  render() {
+    //use form instead for this part
+    return (
+      <div className="inputText">
+        <div><TextArea autoSize={{ minRows: 1, maxRows: 2 }} maxLength="38" /></div>
+        <div><TextArea onPressEnter={value => this.addNote(value, value)} allowClear={true} /></div>
+      </div>
+    )
+  }
 }
 
 export default App;
