@@ -1,4 +1,56 @@
-.inputText {
-  width: 400px;
-  margin: '100px auto';
+body {
+  background-color: rgb(10, 20, 40);
+  /* background-image:  */
+}
+.App {
+  background-color: white;
+  min-height: 200px;
+  margin: 10px 40px 20px 40px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.Notepad {
+  background-color: black;
+  padding: 50px;
+  /* width: 600px; */
+  margin-bottom: 30px;
+}
+
+#add-form{
+  background-color: yellow;
+}
+#add-form input{
+    background-color: orange;
+    border: 0;
+    height:30px;
+    width: 300px;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+#add-form textarea{
+  background-color: orange;
+  border: 0;
+  height: 30px;
+  width: 300px;
+  border-radius: 10px;
+  padding: 20px;
+}
+#add-form button{
+    background-color: orange;
+    border: 0;
+    height: 25px; 
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px;       
+}
+
+#add-form input:focus{
+  outline:none
+}
+#add-form textarea:focus{
+  outline:none
+}
+#add-form button:focus{
+  outline:none
 }

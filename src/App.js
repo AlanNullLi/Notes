@@ -1,46 +1,118 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import { Input } from 'antd';
+import ListNotes from './ListNotes';
+import { Input, Button, Form } from 'antd';
 
-const { TextArea } = Input;
-//can use input as the actual notecard component too 
-//unless there is a better card component
-//set the default as what is in state already
-//then when they press enter they can just see the new stuff 
-
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteList: []
+      noteList: [],
+      currentTitle: '',
+      currentText: ''
     };
+
+    this.addNote = this.addNote.bind(this);
+    this.handleTitleInput = this.handleTitleInput.bind(this);
+    this.handleTextInput = this.handleTextInput.bind(this);
+    this.removeNote = this.removeNote.bind(this);
+    this.editTitle = this.editTitle.bind(this);
+    this.editNote = this.editNote.bind(this);
   }
 
-  addNote = (tit, not) => {
-    var d = new Date();
-    this.setState(prevState => {
-      var newNote = { title: tit, notes: not, time: d.toLocaleString() }
-      return { ...prevState.noteList, newNote }
-    });
+  addNote(e) {
+    e.preventDefault();
+    const newNote = {
+      title: this.state.currentTitle,
+      text: this.state.currentText,
+      currentTime: Date.now()
+    };
+    if (newNote.title !== '') {
+      const newList = [...this.state.noteList, newNote];
+      this.setState({
+        noteList: newList,
+        currentTitle: '',
+        currentText: ''
+      })
+    }
   }
-  removeNote = (tit) => {
+  handleTitleInput(e) {
+    console.log("hi")
+    this.setState({
+      currentTitle: e.target.value
+    })
+  }
+  handleTextInput(e) {
+    console.log("hi")
+    this.setState({
+      currentText: e.target.value
+    })
+  }
+  removeNote = (key) => {
     const newNotes = this.state.noteList.filter(
-      note => note.title !== tit
+      note => note.title !== key
     );
-    this.setState(prevState => {
-      return { noteList: newNotes }
+    this.setState({ noteList: newNotes })
+  }
+  editTitle(newTitle, key) {
+    const list = this.state.noteList
+    list.map(note => {
+      if (note.title === key) {
+        note.title = newTitle
+      }
     });
+    this.setState({
+      noteList: list
+    })
+  }
+  editNote(newText, key) {
+    const list = this.state.noteList
+    list.map(note => {
+      if (note.title === key) {
+        note.text = newText
+      }
+    });
+    this.setState({
+      noteList: list
+    })
   }
 
   render() {
-    //use form instead for this part
     return (
-      <div className="inputText">
-        <div><TextArea autoSize={{ minRows: 1, maxRows: 2 }} maxLength="38" /></div>
-        <div><TextArea onPressEnter={value => this.addNote(value, value)} allowClear={true} /></div>
+      <div className="App">
+        <h1>Alan's Note Taking App</h1>
+        <div className="Notepad" >
+          <Form id="add-form" >
+            <Input
+              type="text"
+              placeholder="Title Here"
+              value={this.state.currentTitle}
+              onChange={this.handleTitleInput}
+            />
+            <Input.TextArea
+              placeholder="notes here"
+              value={this.state.currentText}
+              onChange={this.handleTextInput}
+            />
+            <Button onClick={this.addNote} type="submit">Add note</Button>
+          </Form>
+        </div>
+
+        <div>
+          <ListNotes
+            noteList={this.state.noteList}
+            removeNote={this.removeNote}
+            editTitle={this.editTitle}
+            editNote={this.editNote}>
+          </ListNotes>
+        </div>
+
       </div>
     )
   }
 }
+
+//randomize colors of note
+//maybe add a change color button
 
 export default App;
