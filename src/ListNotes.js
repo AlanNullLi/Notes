@@ -11,21 +11,26 @@ class ListNotes extends React.Component {
         }
     }
 
-    //maybe should use input instead of card so can be updated whenever
     render() {
         const list = this.props.noteList;
         const listNotes = list.map(note => {
             return <div className="Note">
                 <Form id="noteCard">
-                    <Input
-                        type="text"
-                        value={note.title}
-                        onChange={(e) => { this.props.editTitle(e.target.value, note.title) }}
-                    />
-                    <Input.TextArea
-                        value={note.text}
-                        onChange={(e) => { this.props.editNote(e.target.value, note.title) }}
-                    />
+                    <div className="NoteTitle">
+                        <Input
+                            type="text"
+                            value={note.title}
+                            onChange={(e) => { this.props.editTitle(e.target.value, note.title) }}
+                            maxLength={30}
+                        />
+                    </div>
+                    <div>
+                        <Input.TextArea
+                            value={note.text}
+                            onChange={(e) => { this.props.editNote(e.target.value, note.title) }}
+                            autoSize={{ minRows: 10, maxRows: 10 }}
+                        />
+                    </div>
                     <Button onClick={(e) => { this.props.removeNote(note.title) }} >Remove Note</Button>
                 </Form>
                 {/* <Card

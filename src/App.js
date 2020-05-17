@@ -80,21 +80,29 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Alan's Note Taking App</h1>
+        {/* <h1 className="Header">Alan's Note Taking App</h1> */}
         <div className="Notepad" >
           <Form id="add-form" >
-            <Input
-              type="text"
-              placeholder="Title Here"
-              value={this.state.currentTitle}
-              onChange={this.handleTitleInput}
-            />
-            <Input.TextArea
-              placeholder="notes here"
-              value={this.state.currentText}
-              onChange={this.handleTextInput}
-            />
-            <Button onClick={this.addNote} type="submit">Add note</Button>
+            <div className="InputTitle">
+              <Input
+                type="text"
+                placeholder="Title Here"
+                value={this.state.currentTitle}
+                onChange={this.handleTitleInput}
+                maxLength={30}
+              />
+            </div>
+            <div className="InputNote">
+              <Input.TextArea
+                placeholder="notes here"
+                value={this.state.currentText}
+                onChange={this.handleTextInput}
+                autoSize={{ maxRows: 6 }}
+              />
+            </div>
+            <div className="ButtonNote">
+              <Button onClick={this.addNote} type="submit">Add note</Button>
+            </div>
           </Form>
         </div>
 
