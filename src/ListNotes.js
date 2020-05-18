@@ -3,6 +3,14 @@ import './ListNotes.css'
 import { Input, Form, Button } from 'antd'
 import FlipMove from 'react-flip-move';
 
+/*This is a great place to use a functional component. We use functional components when our component simply displays
+information to a user and/or takes in props, but does not control state. Therefore you could write:
+const ListNotes = (props) => {
+    return (<div></div>);
+}
+or you could pull out props and say ({editTitle, editNote}) and then access these within your file
+
+*/
 class ListNotes extends React.Component {
     constructor(props) {
         super(props);
@@ -45,6 +53,8 @@ class ListNotes extends React.Component {
         return (
             <div className="List">
                 <FlipMove duration={300} easing="ease-in-out">
+            //You can choose to keep listNotes functionality in render. It is also acceptable to put that code directly
+            //in the return here.
                     {listNotes}
                 </FlipMove>
             </div>
