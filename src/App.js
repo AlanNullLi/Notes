@@ -12,6 +12,9 @@ class App extends React.Component {
       currentText: ''
     };
 
+    /*If you use arrow functions throughout your document, you do not need to use .bind(this). 
+    Using arrow functions will reduce amount of lines you have to write / improve readability.
+    */
     this.addNote = this.addNote.bind(this);
     this.handleTitleInput = this.handleTitleInput.bind(this);
     this.handleTextInput = this.handleTextInput.bind(this);
@@ -20,6 +23,7 @@ class App extends React.Component {
     this.editNote = this.editNote.bind(this);
   }
 
+  //For example, make this an arrow function like you did with removeNote
   addNote(e) {
     e.preventDefault();
     const newNote = {
@@ -28,6 +32,7 @@ class App extends React.Component {
       currentTime: Date.now()
     };
     if (newNote.title !== '') {
+      //I like how you created newList
       const newList = [...this.state.noteList, newNote];
       this.setState({
         noteList: newList,
@@ -36,6 +41,8 @@ class App extends React.Component {
       })
     }
   }
+  
+  //Remove console.logs in the finished product
   handleTitleInput(e) {
     console.log("hi")
     this.setState({
@@ -49,12 +56,18 @@ class App extends React.Component {
     })
   }
   removeNote = (key) => {
+    //Great use of filter
+    /*Suggestion: give newNotes a more descriptive name so that we know what's happening within newNotes.
+    Think about how within newNotes we're removing a note, shortening the notes list, etc.
+    */
     const newNotes = this.state.noteList.filter(
       note => note.title !== key
     );
     this.setState({ noteList: newNotes })
   }
   editTitle(newTitle, key) {
+    //Another way to write this (not necessarily preferred but just so you're aware) is const {noteList} = this.state
+    //Useful if you want to multiple items out of state like const {noteList, currentTitle} = this.state
     const list = this.state.noteList
     list.map(note => {
       if (note.title === key) {
@@ -65,6 +78,7 @@ class App extends React.Component {
       noteList: list
     })
   }
+
   editNote(newText, key) {
     const list = this.state.noteList
     list.map(note => {
@@ -119,6 +133,12 @@ class App extends React.Component {
     )
   }
 }
+
+/*On your note about randomizing colors, I would actually recommend against this if you're talking about making each individual
+note a different color from the others in the list. Color should be used sparingly and with meaning. You could
+change the color of notes if, for example, a user wanted to group notes together and to denote difference across
+groups set a color on a group. But if there is no meaning behind changing the color, it is preferred we leave it
+uniform.*/
 
 //randomize colors of note
 //maybe add a change color button
